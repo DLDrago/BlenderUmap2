@@ -35,6 +35,7 @@ using Newtonsoft.Json.Linq;
 using Serilog;
 using SkiaSharp;
 using static CUE4Parse.UE4.Assets.Exports.Texture.EPixelFormat;
+using SharpGLTF.Geometry;
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 // ReSharper disable PositionalPropertyUsedProblem
@@ -653,7 +654,8 @@ namespace BlenderUmap {
         public static void ExportMesh(FPackageIndex mesh, List<Mat> materials) {
             if (NoExport || mesh == null || mesh.IsNull) return;
             var exportObj = mesh.Load<UObject>();
-            if (!(exportObj is UStaticMesh) || !(exportObj is USkeletalMesh) || exportObj == null) return;
+            //if (!(exportObj is UStaticMesh) || !(exportObj is USkeletalMesh) || exportObj == null) return;
+            if (exportObj == null) return;
             var output = new FileInfo(Path.Combine(GetExportDir(exportObj).ToString(), exportObj.Name + ".pskx"));
 
             ThreadPool.QueueUserWorkItem(delegate {

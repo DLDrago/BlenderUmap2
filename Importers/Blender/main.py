@@ -752,8 +752,7 @@ def create_node_groups():
         tex_shader.links.new(principled_bsdf.outputs[0], g_out.inputs[0])
 
         # diffuse
-        tex_shader.inputs.new("NodeSocketColor", "Diffuse")
-        tex_shader.interface.new_socket("NodeSocketColor", 'INPUT')
+        tex_shader.interface.new_socket(name="NodeSocketColor", description="Diffuse", in_out='INPUT')
         tex_shader.links.new(g_in.outputs[0], principled_bsdf.inputs["Base Color"])
 
         # normal
@@ -765,15 +764,14 @@ def create_node_groups():
         norm_curve.mapping.curves[1].points[0].location = [0, 1]
         norm_curve.mapping.curves[1].points[1].location = [1, 0]
 
-        tex_shader.inputs.new("NodeSocketColor", "Normal")
-        tex_shader.interface.new_socket(name="NodeSocketColor", in_out='INPUT')
+        tex_shader.interface.new_socket(name="NodeSocketColor", description="Normal", in_out='INPUT')
         tex_shader.links.new(g_in.outputs[1], norm_curve.inputs[1])
         tex_shader.links.new(norm_curve.outputs[0], norm_map.inputs[1])
         tex_shader.links.new(norm_map.outputs[0], principled_bsdf.inputs["Normal"])
         tex_shader.inputs[1].default_value = [0.5, 0.5, 1, 1]
 
         # specular
-        tex_shader.interface.new_socket(name="NodeSocketColor", in_out='INPUT')
+        tex_shader.interface.new_socket(name="NodeSocketColor", description="Specular", in_out='INPUT')
         spec_y = 140
         spec_separate_rgb = tex_shader.nodes.new("ShaderNodeSeparateRGB")
         spec_separate_rgb.location = [-200, spec_y]
@@ -790,12 +788,12 @@ def create_node_groups():
         tex_shader.inputs[2].default_value = [0.5, 0, 0.5, 1]
 
         # emission
-        tex_shader.interface.new_socket(name="NodeSocketColor", in_out='INPUT')
+        tex_shader.interface.new_socket(name="NodeSocketColor", description="Emissive", in_out='INPUT')
         tex_shader.links.new(g_in.outputs[3], principled_bsdf.inputs["Emission"])
         tex_shader.inputs[3].default_value = [0, 0, 0, 1]
 
         # alpha
-        tex_shader.inputs.new(name="NodeSocketColor", in_out='INPUT')
+        tex_shader.inputs.new(name="NodeSocketColor", description="Alpha", in_out='INPUT')
         alpha_separate_rgb = tex_shader.nodes.new("ShaderNodeSeparateRGB")
         alpha_separate_rgb.location = [-200, -180]
         tex_shader.links.new(g_in.outputs[4], alpha_separate_rgb.inputs[0])
