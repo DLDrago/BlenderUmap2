@@ -61,15 +61,7 @@ def main(context, onlyimport=False):
             env=env_vars
         )
 
-    tex_shader = None
-    if use_generic_shader or use_generic_shader_as_fallback:
-        uvm = bpy.data.node_groups.get("UV Shader Mix")
-        tex_shader = bpy.data.node_groups.get("Texture Shader")
-
-        if not uvm or not tex_shader: # do we need this anymore?
-            create_node_groups()
-            uvm = bpy.data.node_groups.get("UV Shader Mix")
-            tex_shader = bpy.data.node_groups.get("Texture Shader")
+    # Removed shader
 
     # append all the node groups from blend files in the deps folder
     shader_folder = os.path.join(data_dir, "shader")
@@ -123,7 +115,7 @@ def main(context, onlyimport=False):
             use_cube_as_fallback,
             use_generic_shader,
             use_generic_shader_as_fallback,
-            tex_shader,
+            None,
             textures_to_mapping(bpy.context)
         )
         print(f"Imported in {time.time() - stime} seconds")
